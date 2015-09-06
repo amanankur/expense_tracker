@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Hi, {{ user.nickname }}!</h1><br>
+    <div>
+        <form action="" method="post" name="expenses">
+            {{form.hidden_tag()}}
+        <h3>Add an account</h3>
+
+        <tr>
+              <td>Account Name:</td>
+              <td>{{ form.acc_name(size=12) }}</td>
+              <td>
+                  <select name="Currency">
+                      <option value="Dollars">Dollars</option>
+                      <option value="INR">Rupee</option>
+                 </select>
+              </td>
+        </tr>
+
+        <tr>
+              <td></td>
+              <td><input name = 'submit' type="submit"  value="Save Account"></td>
+          </tr>
+            </form>
+
+
+    </div>
+
+    <h2>Add an expense</h2>
+      <form action="" method="post" name="expenses">
+      {{form.hidden_tag()}}
+      <table>
+          <tr>
+              <td>Price:</td>
+              <td>{{ form.price(size=12) }}</td>
+
+              <td>Description:</td>
+              <td>{{ form.description(size=12) }}</td>
+
+              <td>Type:</td>
+              <td>{{ form.type(size=12) }}</td>
+
+              <td>
+                  {{form.account_type}}
+              </td>
+
+          <td></td>
+              <td><input name = 'submit' type="submit" value="Save Changes"></td>
+          </tr>
+          <br>
+          <tr>
+
+          </tr>
+      </table>
+  </form>
+
+    <form action="" method="post" name="expenses">
+    <h2>Your total expenses are </h2><br>
+
+    <tr>
+
+        <td>Search by:</td>
+    <td><select name="keytype">
+        <option value="type" name = "type">Type</option>
+        <option value="desc" name = "desc">Description</option>
+        <option value="acc_name" name = "acc_name">Account Name</option>
+        </select>
+     </td>
+
+        <td>{{ form.key(size=12) }}</td>
+
+        <td> <input name = 'submit' type="submit" value="Search"></td>
+         </tr>
+</form>
+    <table border="1" width="100%">
+        <tr>
+            <th width="35%">Description</th>
+            <th width="25%">Type</th>
+            <th width="20%">Amount</th>
+            <th width="20%">Account Name</th>
+        </tr>
+        {% if account_list !=None %}
+
+
+            {% for exp_obj in expense_list %}
+                {% for exp in exp_obj %}
+                    <tr>
+
+                        <td>{{exp.description}}</td>
+
+                        <td>{{exp.type}}</td>
+
+
+                        {% if exp.price < 0 %}
+                            <td style=" color:#FF0000; "
+                                align="right">
+                                {{exp.price}}</td>
+                        {% endif %}
+
+                        {% if exp.price >= 0 %}
+                            <td align="right">
+                                {{exp.price}}</td>
+                            {% endif %}
+
+                        <td>{{exp.acc.acc_name}}</td>
+
+        </tr>
+                     {% endfor %}
+                {% endfor %}
+        <tr>
+            <td><b>Total Balance<b></b></td>
+            <td colspan = '2' align="right">{{total_balance}}</td>
+        </tr>
+        {% endif %}
+
+    </table>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+<html>
+  <head>
+
+    <title>Expense App</title>
+  </head>
+  <body>
+    <div>
+        <a href="{{ url_for('signup') }}">Sign Up</a>&nbsp;&nbsp;
+        |&nbsp;&nbsp;<a href="{{url_for('signin')}}"> Already a member? Log in</a>
+        {% if 'email' in session %}
+        | <a href="{{ url_for('logout') }}">Logout</a>
+        {%endif%}
+
+    </div>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }} </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </body>
+</html>
